@@ -1,9 +1,21 @@
 using System;
 
-class Program
+namespace Week01
 {
-    static void Main(string[] args)
+    class Program
     {
-        Console.WriteLine("Hello World! This is the Exercise1 Project.");
+        static void Main(string[] args)
+        {
+            // Prompt the user for their first name
+            Console.Write("What is your first name? ");
+            string firstName = Console.ReadLine();
+
+            // Prompt the user for their last name
+            Console.Write("What is your last name? ");
+            string lastName = Console.ReadLine();
+
+            // Display the result in the required format
+            Console.WriteLine($"Your name is {lastName}, {firstName} {lastName}.");
+        }
     }
 }
