@@ -21,25 +21,45 @@ public class Journal
 
     public void SaveToFile(string filename)
     {
-        using (StreamWriter writer = new StreamWriter(filename))
+        try
         {
-            foreach (var entry in _entries)
+            using (StreamWriter writer = new StreamWriter(filename))
             {
-                writer.WriteLine(entry.ToFileFormat());
+                foreach (var entry in _entries)
+                {
+                    writer.WriteLine(entry.ToFileFormat());
+                }
             }
+            Console.WriteLine($"Journal saved to {filename} successfully.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving journal: {ex.Message}");
         }
     }
 
     public void LoadFromFile(string filename)
     {
-        _entries.Clear();
-        using (StreamReader reader = new StreamReader(filename))
+        try
         {
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            _entries.Clear();
+            using (StreamReader reader = new StreamReader(filename))
             {
-                _entries.Add(Entry.FromFileFormat(line));
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    Entry entry = Entry.FromFileFormat(line);
+                    if (entry != null)
+                    {
+                        _entries.Add(entry);
+                    }
+                }
             }
+            Console.WriteLine($"Journal loaded from {filename} successfully.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading journal: {ex.Message}");
         }
     }
 }

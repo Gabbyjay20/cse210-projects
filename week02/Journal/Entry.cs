@@ -25,7 +25,23 @@ public class Entry
 
     public static Entry FromFileFormat(string line)
     {
-        string[] parts = line.Split('|');
-        return new Entry(parts[1], parts[2]) { _date = parts[0] };
+        try
+        {
+            string[] parts = line.Split('|');
+            if (parts.Length >= 3)
+            {
+                return new Entry(parts[1], parts[2]) { _date = parts[0] };
+            }
+            else
+            {
+                Console.WriteLine($"Warning: Invalid entry format in line: {line}");
+                return null;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error parsing entry: {ex.Message}");
+            return null;
+        }
     }
 }
