@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ReflectionActivity : Activity
 {
@@ -28,6 +29,8 @@ public class ReflectionActivity : Activity
             "What did you learn about yourself through this experience?",
             "How can you keep this experience in mind in the future?"
         };
+        // Shuffle questions to ensure all are used before repeating
+        _questions = _questions.OrderBy(x => Guid.NewGuid()).ToList();
     }
 
     public override void RunActivity()
@@ -48,11 +51,13 @@ public class ReflectionActivity : Activity
         Console.WriteLine();
 
         DateTime endTime = DateTime.Now.AddSeconds(_duration);
+        int questionIndex = 0;
         while (DateTime.Now < endTime)
         {
-            string question = _questions[random.Next(_questions.Count)];
+            string question = _questions[questionIndex % _questions.Count];
+            questionIndex++;
             Console.Write($"> {question} ");
-            ShowSpinner(10); // Pause for 10 seconds with spinner
+            ShowSpinner(5); // Pause for 5 seconds with spinner
             Console.WriteLine();
         }
         EndActivity();

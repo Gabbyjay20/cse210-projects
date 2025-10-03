@@ -9,17 +9,7 @@ public class BreathingActivity : Activity
     public override void RunActivity()
     {
         StartActivity();
-        DateTime endTime = DateTime.Now.AddSeconds(_duration);
-        while (DateTime.Now < endTime)
-        {
-            Console.Write("Breathe in...");
-            ShowCountdown(4);
-            Console.WriteLine();
-            if (DateTime.Now >= endTime) break;
-            Console.Write("Now breathe out...");
-            ShowCountdown(4);
-            Console.WriteLine();
-        }
+        ShowBreathingAnimation(_duration);
         EndActivity();
     }
 }
